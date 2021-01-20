@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#ACDDF8"
+    tools:context=".Rules">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+
+        android:text="Ultimate Tic Tac Toe Rules!"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK, so we're all familiar with tic-tac-toe, right? The normal 9 square gird?"
+        android:fontFamily="casual"
+        android:layout_margin="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="left"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/tictactoe1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="13dp"
+            android:fontFamily="casual"
+            android:text="Well, in ultimate tic-tac-toe, you’ve got a smaller grid within each of those 9 squares:"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/tictactoe2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To win the game, you have to win three of the larger squares in a row, and to win a large square, you have to win three in a row in the smaller grid inside it."
+        android:fontFamily="casual"
+        android:layout_margin="20dp"
+        android:textSize="13dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/rules2"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:onClick="goRules2"
+        android:fontFamily="casual"
+        android:backgroundTint="@color/teal_200"
+        android:textColor="@color/black"/>
+</LinearLayout>

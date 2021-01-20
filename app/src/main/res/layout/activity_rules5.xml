@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="#ACDDF8"
+    tools:context=".Rules5">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules 5:"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Then it’s O’s turn again (O is still sent to the small grid determined by X’s last move). Eventually someone will claim three small grids in a row, thus winning the whole game:"
+        android:fontFamily="casual"
+        android:layout_margin="20dp"
+        android:textSize="13dp"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/tictactoe9"
+        android:layout_marginLeft="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nice job, X!
+
+As you can imagine, there’s a lot of strategy involved. You’ve got to keep in mind where you’re sending your opponent, thinking several moves ahead.
+
+One rule: If the player before you sends you to a grid that’s already been won, you get to go wherever you want. (So try not to send your opponent to an already-won grid!)
+
+Another rule you’ll need to decide on your own will be what to do with smaller grids that result in a tie. You could either count them for 1) neither X nor O or 2) both X and O. Try both ways and let me know which one you like more!"
+        android:fontFamily="casual"
+        android:layout_margin="20dp"
+        android:textSize="13dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/menu"
+        android:text="Ready to Play?"
+        android:onClick="goMenu"
+        android:fontFamily="casual"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/teal_200"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

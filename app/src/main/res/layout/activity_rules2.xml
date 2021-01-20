@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="#ACDDF8"
+    tools:context=".Rules2">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules 2:"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:textSize="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Here’s how it works. Say X goes first:"
+        android:fontFamily="casual"
+        android:textSize="13dp"
+        android:layout_margin="20dp"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/tictactoe3"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Now, just like in normal tic-tac-toe, O gets to go. But O can’t just go anywhere. The smaller grid O must play in is determined by X’s move. So since X went in the bottom right corner within his small grid, O must go in the bottom right corner of the large grid:"
+        android:fontFamily="casual"
+        android:textSize="13dp"
+        android:layout_margin="20dp"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/tictactoe4"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/rules3"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:onClick="goRules3"
+        android:fontFamily="casual"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/teal_200"
+        android:textColor="@color/black"/>
+
+
+
+</LinearLayout>

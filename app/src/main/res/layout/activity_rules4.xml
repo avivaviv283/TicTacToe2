@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="#ACDDF8"
+    tools:context=".Rules4">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules 4:"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A few moves down, the game might look like this:"
+        android:fontFamily="casual"
+        android:layout_margin="20dp"
+        android:textSize="13dp"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/tictactoe7"
+        android:layout_marginLeft="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See what just happened in the far right middle square? X got three in a row! That means X wins that small grid, thus claiming that square in the large grid:"
+        android:fontFamily="casual"
+        android:layout_margin="20dp"
+        android:textSize="13dp"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/tictactoe8"
+        android:layout_marginLeft="30dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rules5"
+        android:text="Next"
+        android:onClick="goRules5"
+        android:fontFamily="casual"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/teal_200"
+        android:textColor="@color/black"/>
+
+
+</LinearLayout>
