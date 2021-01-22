@@ -15,7 +15,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     Button btnResetGame;
     Button[][] arr = {btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9};
-    ;
+
     int goTo = 0;
     Button btn;
     TextView tvWIn;
@@ -28,9 +28,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        tvWIn = (TextView) findViewById(R.id.tvWin);
+        tvWIn = findViewById(R.id.tvWin);
         tvWIn.setVisibility(View.INVISIBLE);
-        btnResetGame = (Button) findViewById(R.id.btnResetGame);
+        btnResetGame = findViewById(R.id.btnResetGame);
         btnResetGame.setOnClickListener(this);
         btnResetGame.setVisibility(View.INVISIBLE);
         btnsg1 = new Button[9];
@@ -133,25 +133,17 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         btnsg9[7] = (Button) findViewById(R.id.g98);
         btnsg9[8] = (Button) findViewById(R.id.g99);
 
-        setArr(btnsg1);
-        setArr(btnsg2);
-        setArr(btnsg3);
-        setArr(btnsg4);
-        setArr(btnsg5);
-        setArr(btnsg6);
-        setArr(btnsg7);
-        setArr(btnsg8);
-        setArr(btnsg9);
-
+        setArr();
 
     }
 
-    public void setArr(Button[] btnsg) {
-
-        for (int j = 0; j < 9; j++) {
-            btnsg[j].setOnClickListener(this);
-            allBtns[btnCount] = btnsg[j];
-            btnCount++;
+    public void setArr() {
+        for (int i=0;i<arr.length;i++) {
+            for (int j = 0; j <arr.length; j++) {
+                arr[i][j].setOnClickListener(this);
+                allBtns[btnCount] = arr[i][j];
+                btnCount++;
+            }
         }
     }
 
