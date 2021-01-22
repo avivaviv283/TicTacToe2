@@ -138,6 +138,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void setArr() {
+
         for (int i=0;i<arr.length;i++) {
             for (int j = 0; j <arr.length; j++) {
                 arr[i][j].setOnClickListener(this);
