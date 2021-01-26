@@ -15,12 +15,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     Button btnResetGame;
     Button[][] arr = new Button[9][9];
     int goTo = 0;
-    Button btn;
+
     TextView tvWIn;
     Intent goMenu;
     int counter = 0;
     int btnCount = 0;
-    private Object Button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +145,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    // setOnClickListener(this);
+
     public void setArr() {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
@@ -155,18 +155,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-
-    public boolean equals1(String str1, String str2) {
-        if (str1.length() != str2.length())
-            return false;
-
-        for (int i = 0; i < str1.length(); i++) {
-            if (str1.charAt(i) != str2.charAt(i))
-                return false;
-
-        }
-        return true;
-    }
 
     public void onClick(View v) {
 
@@ -194,24 +182,24 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 counter++;
                 goTo = j;
                 disable();
-                if (!winSquare(i,j).equals(""));
-                    for (int k=0;k<arr.length;k++){
-                        arr[i][k].setEnabled(false);
-                    }
-                    if (winSquare(i,j).equals("X")){
-                        for (int k=0;k<arr.length;k+=2){
-                            arr[i][k].setText("X");
-                        }
-                    }
-                    if (winSquare(i,j).equals("O")){
-                        for (int k=0;k<arr.length;k++){
-                            if (k!=4){
-                                arr[i][k].setText("O");
-                            }
-                        }
-                    }
-
-                }
+                 if (!winSquare(i,j).equals(""));
+                      for (int k=0;k<arr.length;k++){
+                         arr[i][k].setEnabled(false);
+                     }
+//                    if (winSquare(i,j).equals("X")){
+//                        for (int k=0;k<arr.length;k+=2){
+//                            arr[i][k].setText("X");
+//                        }
+//                    }
+//                    if (winSquare(i,j).equals("O")){
+//                        for (int k=0;k<arr.length;k++){
+//                            if (k!=4){
+//                                arr[i][k].setText("O");
+//                            }
+//                        }
+//                    }
+//
+                  }
             if (btnResetGame.getVisibility() == View.INVISIBLE) {
                 btnResetGame.setVisibility(View.VISIBLE);
             }
@@ -253,9 +241,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startActivity(goMenu);
     }
 
-    public String winSquare(int i,int j) {
+    public boolean findColumn(int i,int j) {
         int flag = 0;
-
         String text = arr[i][j].getText().toString();
         for (int k = j % 3; k <= 8; k += 3) {
             if (!text.equals(arr[i][k].getText().toString())) {
@@ -265,10 +252,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         }
         if (flag == 3) {
-            return text;
+            return true;
         }
-        flag = 0;
+        return false;
+    }
 
+    public boolean findRow(int i,int j){
+        int flag = 0;
+        String text = arr[i][j].getText().toString();
         for (int k = j - j % 3; i <= 8; k++) {
             if (!text.equals(arr[i][k].getText().toString())) {
                 break;
@@ -276,10 +267,17 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             flag++;
 
         }
+
+
         if (flag == 3) {
-            return text;
+            return true;
         }
-        flag = 0;
+        return false;
+    }
+
+    public boolean findDiagonal(int i,int j){
+        int flag = 0;
+        String text = arr[i][j].getText().toString();
         if (j % 2 == 0) {
             if (j % 4 == 0) {
                 for (int k = 0; k <= 8; i += 4) {
@@ -290,7 +288,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                 }
                 if (flag == 3) {
-                    return text;
+                    return true;
                 }
                 flag = 0;
 
@@ -304,12 +302,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                 }
                 if (flag == 3) {
-                    return text;
+                    return true;
                 }
 
             }
         }
+        return false;
 
+    }
+
+
+
+
+    public String winSquare(int i,int j) {
+        String text = arr[i][j].getText().toString();
+        if (findRow(i,j)||findColumn(i,j)||findDiagonal(i,j)){
+           return text;
+        }
       return "";
      }
 
