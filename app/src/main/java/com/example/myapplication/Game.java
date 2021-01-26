@@ -194,6 +194,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 counter++;
                 goTo = j;
                 disable();
+                if (!winSquare(i,j).equals(""));
+                    for (int k=0;k<arr.length;k++){
+                        arr[i][k].setEnabled(false);
+                    }
+                    if (winSquare(i,j).equals("X")){
+                        for (int k=0;k<arr.length;k+=2){
+                            arr[i][k].setText("X");
+                        }
+                    }
+                    if (winSquare(i,j).equals("O")){
+                        for (int k=0;k<arr.length;k++){
+                            if (k!=4){
+                                arr[i][k].setText("O");
+                            }
+                        }
+                    }
+
                 }
             if (btnResetGame.getVisibility() == View.INVISIBLE) {
                 btnResetGame.setVisibility(View.VISIBLE);
