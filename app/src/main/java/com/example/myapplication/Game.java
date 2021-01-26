@@ -194,8 +194,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 counter++;
                 goTo = j;
                 disable();
-
-
                 }
             if (btnResetGame.getVisibility() == View.INVISIBLE) {
                 btnResetGame.setVisibility(View.VISIBLE);
@@ -238,10 +236,66 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startActivity(goMenu);
     }
 
-    public String winSquare(){
-        if()
+    public String winSquare(int i,int j) {
+        int flag = 0;
+
+        String text = arr[i][j].getText().toString();
+        for (int k = j % 3; k <= 8; k += 3) {
+            if (!text.equals(arr[i][k].getText().toString())) {
+                break;
+            }
+            flag++;
+
+        }
+        if (flag == 3) {
+            return text;
+        }
+        flag = 0;
+
+        for (int k = j - j % 3; i <= 8; k++) {
+            if (!text.equals(arr[i][k].getText().toString())) {
+                break;
+            }
+            flag++;
+
+        }
+        if (flag == 3) {
+            return text;
+        }
+        flag = 0;
+        if (j % 2 == 0) {
+            if (j % 4 == 0) {
+                for (int k = 0; k <= 8; i += 4) {
+                    if (!text.equals(arr[i][k].getText().toString())) {
+                        break;
+                    }
+                    flag++;
+
+                }
+                if (flag == 3) {
+                    return text;
+                }
+                flag = 0;
+
+            }
+            if (j == 4 || j % 4 != 0) {
+                for (int k = 2; k <= 0; k += 2) {
+                    if (!text.equals(arr[i][k].getText().toString())) {
+                        break;
+                    }
+                    flag++;
+
+                }
+                if (flag == 3) {
+                    return text;
+                }
+
+            }
+        }
+
+      return "";
+     }
 
 
-
-    }
 }
+
