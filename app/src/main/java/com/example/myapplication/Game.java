@@ -7,15 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     Button[] btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9;
-    Button[] allBtns;
-
     Button btnResetGame;
-    Button[][] arr = {btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9};
-
+    Button[][] arr = new Button[9][9];
     int goTo = 0;
     Button btn;
     TextView tvWIn;
@@ -133,16 +131,25 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         btnsg9[7] = (Button) findViewById(R.id.g98);
         btnsg9[8] = (Button) findViewById(R.id.g99);
 
+        arr[0] = btnsg1;
+        arr[1] = btnsg2;
+        arr[2] = btnsg3;
+        arr[3] = btnsg4;
+        arr[4] = btnsg5;
+        arr[5] = btnsg6;
+        arr[6] = btnsg7;
+        arr[7] = btnsg8;
+        arr[8] = btnsg9;
+
         setArr();
 
     }
 
+    // setOnClickListener(this);
     public void setArr() {
-
-        for (int i=0;i<arr.length;i++) {
-            for (int j = 0; j <arr.length; j++) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
                 arr[i][j].setOnClickListener(this);
-                allBtns[btnCount] = arr[i][j];
                 btnCount++;
             }
         }
@@ -162,24 +169,36 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        int current = 0;
-        int go = 0;
+
         if (btnResetGame == v) {
             this.reset();
-        } else {
+        }
+        else {
+            int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1,2)) - 1;
+            int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
 
-            if (counter % 2 == 0) {
-                btn.setText("O");
-            } else {
-                btn.setText("X");
+            if (!arr[i][j].getText().equals("")){
+                Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
             }
-            counter++;
+            else {
 
-            Button[] temp = new Button[9];
-            for (int i = 0; i < allBtns.length; i++) {
-                if (allBtns[i] == v) {
-                    goTo = (i + 1) % 9;
+
+                if (counter % 2 == 0) {
+                    arr[i][j].setText("O");
+
                 }
+                else {
+                    arr[i][j].setText("X");
+
+                }
+                counter++;
+                goTo = j;
+                disable();
+
+
+                }
+            if (btnResetGame.getVisibility() == View.INVISIBLE) {
+                btnResetGame.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -187,10 +206,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public Button[][] disable() {
         Button[][] temp = arr;
         for (int i = 0; i < temp.length; i++) {
-            if (i + 1 != goTo) {
+            if (i != goTo) {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(false);
+
                 }
+            }
+            for (int k=0;k<arr[goTo].length;k++) {
+                arr[goTo][k].setEnabled(true);
             }
 
         }
@@ -200,9 +223,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void reset(){
-        for(int i=0;i<allBtns.length;i++){
-            allBtns[i].setText("");
+    public void reset() {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                arr[i][j].setText("");
+                arr[i][j].setEnabled(true);
+            }
         }
     }
 
@@ -210,5 +236,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void goMenu(View view) {
         goMenu = new Intent(this, MainActivity.class);
         startActivity(goMenu);
+    }
+
+    public String winSquare(){
+        if()
+
+
+
     }
 }
