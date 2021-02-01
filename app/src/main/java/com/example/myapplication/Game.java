@@ -160,37 +160,45 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         if (btnResetGame == v) {
             this.reset();
-        }
-        else {
-            int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1,2)) - 1;
+        } else {
+            int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1;
             int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
 
-            if (!arr[i][j].getText().equals("")){
+            if (!arr[i][j].getText().equals("")) {
                 Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
 
 
                 if (counter % 2 == 0) {
                     arr[i][j].setText("O");
 
-                }
-                else {
+                } else {
                     arr[i][j].setText("X");
 
                 }
                 counter++;
                 goTo = j;
                 disable();
-                 if (!winSquare(i,j).equals(""));
-                      for (int k=0;k<arr.length;k++){
-                         arr[i][k].setEnabled(false);
-                     }
-//                    if (winSquare(i,j).equals("X")){
-//                        for (int k=0;k<arr.length;k+=2){
-//                            arr[i][k].setText("X");
-//                        }
-//                    }
+                if (isSameSquare(i, j)) {
+                    for (int k = 0; k == arr.length; k++) {
+                        for (int l = 0; l == arr.length; l++) {
+                            arr[k][l].setEnabled(true);
+                        }
+                    }
+                }
+
+                if (!winSquare(i, j).equals("")) {
+                    for (int k = 0; k < arr.length; k++) {
+                        arr[i][k].setEnabled(false);
+
+                    }
+                }
+
+                      if (winSquare(i,j).equals("X")){
+                          for (int k=0;k<arr.length;k+=2){
+                              arr[i][k].setText("X");
+                          }
+                      }
 //                    if (winSquare(i,j).equals("O")){
 //                        for (int k=0;k<arr.length;k++){
 //                            if (k!=4){
@@ -199,12 +207,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 //                        }
 //                    }
 //
-                  }
-            if (btnResetGame.getVisibility() == View.INVISIBLE) {
-                btnResetGame.setVisibility(View.VISIBLE);
             }
         }
+//            if (btnResetGame.getVisibility() == View.INVISIBLE) {
+//                btnResetGame.setVisibility(View.VISIBLE);
+//            }
     }
+
 
     public Button[][] disable() {
         Button[][] temp = arr;
@@ -215,13 +224,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                 }
             }
-            for (int k=0;k<arr[goTo].length;k++) {
+            for (int k = 0; k < arr[goTo].length; k++) {
                 arr[goTo][k].setEnabled(true);
             }
 
         }
         return temp;
 
+
+    }
+
+    public boolean isSameSquare(int i, int j) {
+        if (i == j) {
+            return true;
+        }
+        return false;
 
     }
 
@@ -241,11 +258,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startActivity(goMenu);
     }
 
-    public boolean findColumn(int i,int j) {
+    public boolean findColumn(int i, int j) {
         int flag = 0;
         String text = arr[i][j].getText().toString();
         for (int k = j % 3; k <= 8; k += 3) {
             if (!text.equals(arr[i][k].getText().toString())) {
+
                 break;
             }
             flag++;
@@ -257,10 +275,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return false;
     }
 
-    public boolean findRow(int i,int j){
+    public boolean findRow(int i, int j) {
         int flag = 0;
         String text = arr[i][j].getText().toString();
-        for (int k = j - j % 3; i <= 8; k++) {
+        for (int k = j - j % 3; k < j - j % 3 + 3; k++) {
             if (!text.equals(arr[i][k].getText().toString())) {
                 break;
             }
@@ -275,12 +293,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return false;
     }
 
-    public boolean findDiagonal(int i,int j){
+    public boolean findDiagonal(int i, int j) {
         int flag = 0;
         String text = arr[i][j].getText().toString();
         if (j % 2 == 0) {
             if (j % 4 == 0) {
-                for (int k = 0; k <= 8; i += 4) {
+                for (int k = 0; k <= 8; k += 4) {
+
                     if (!text.equals(arr[i][k].getText().toString())) {
                         break;
                     }
@@ -294,8 +313,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
             }
             if (j == 4 || j % 4 != 0) {
-                for (int k = 2; k <= 0; k += 2) {
+                for (int k = 2; k <= 6; k += 2) {
                     if (!text.equals(arr[i][k].getText().toString())) {
+
                         break;
                     }
                     flag++;
@@ -304,7 +324,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 if (flag == 3) {
                     return true;
                 }
-
             }
         }
         return false;
@@ -312,15 +331,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-
-
-    public String winSquare(int i,int j) {
+    public String winSquare(int i, int j) {
         String text = arr[i][j].getText().toString();
-        if (findRow(i,j)||findColumn(i,j)||findDiagonal(i,j)){
-           return text;
+        if (findRow(i, j) || findColumn(i, j) || findDiagonal(i, j)) {
+            return text;
         }
-      return "";
-     }
+
+        return "";
+    }
 
 
 }
