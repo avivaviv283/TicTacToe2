@@ -14,8 +14,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     Button[] btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9;
     Button btnResetGame;
     Button[][] arr = new Button[9][9];
+    int[] boardState = new int[9];
     int goTo = 0;
-
+    final int noWin = 0;
+    final int X = 1;
+    final int O = 2;
     TextView tvWIn;
     Intent goMenu;
     int counter = 0;
@@ -143,8 +146,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         setArr();
 
+        for (int i = 0; i < boardState.length; i++) {
+            boardState[i] = noWin;
+        }
     }
-
 
     public void setArr() {
         for (int i = 0; i < arr.length; i++) {
@@ -177,8 +182,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                 }
                 counter++;
+
                 goTo = j;
                 disable();
+                if (boardState[goTo] != noWin) {
+                    enable();
+                }
                 if (isSameSquare(i, j)) {
                     for (int k = 0; k == arr.length; k++) {
                         for (int l = 0; l == arr.length; l++) {
@@ -187,31 +196,36 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                     }
                 }
 
+
                 if (!winSquare(i, j).equals("")) {
                     for (int k = 0; k < arr.length; k++) {
                         arr[i][k].setEnabled(false);
-
                     }
                 }
 
-                      if (winSquare(i,j).equals("X")){
-                          for (int k=0;k<arr.length;k+=2){
-                              arr[i][k].setText("X");
-                          }
-                      }
-//                    if (winSquare(i,j).equals("O")){
-//                        for (int k=0;k<arr.length;k++){
-//                            if (k!=4){
-//                                arr[i][k].setText("O");
-//                            }
-//                        }
-//                    }
-//
+                if (winSquare(i, j).equals("X")) {
+                    for (int l=0;l<arr.length;l++){
+                        arr[i][l].setText("");
+                    }
+                    for (int k = 0; k < arr.length; k += 2) {
+                        arr[i][k].setText("X");
+                    }
+                    boardState[i] = X;
+                }
+                if (winSquare(i, j).equals("O")) {
+                    for (int k = 0; k < arr.length; k++) {
+                        if (k != 4) {
+                            arr[i][k].setText("O");
+                        }
+                    }
+                    boardState[i] = O;
+                }
+
             }
         }
-//            if (btnResetGame.getVisibility() == View.INVISIBLE) {
-//                btnResetGame.setVisibility(View.VISIBLE);
-//            }
+        if (btnResetGame.getVisibility() == View.INVISIBLE) {
+            btnResetGame.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -230,8 +244,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         }
         return temp;
+    }
 
-
+    public Button[][] enable() {
+        Button[][] temp = arr;
+        for (int i = 0; i < temp.length; i++) {
+            if (boardState[i] == noWin) {
+                for (int j = 0; j < temp.length; j++) {
+                    temp[i][j].setEnabled(true);
+                }
+            }
+            else {
+                for (int l = 0; l < temp.length; l++) {
+                    temp[i][l].setEnabled(false);
+                }
+            }
+        }
+        return temp;
     }
 
     public boolean isSameSquare(int i, int j) {
