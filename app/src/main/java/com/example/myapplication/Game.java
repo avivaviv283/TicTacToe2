@@ -188,12 +188,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 if (boardState[goTo] != noWin) {
                     enable();
                 }
-                if (isSameSquare(i, j)) {
-                    for (int k = 0; k == arr.length; k++) {
-                        for (int l = 0; l == arr.length; l++) {
-                            arr[k][l].setEnabled(true);
-                        }
-                    }
+                if (isSameSquare(i, j)&& !winSquare(i,j).equals("")) {
+                    enable();
                 }
 
 
@@ -217,6 +213,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                         if (k != 4) {
                             arr[i][k].setText("O");
                         }
+                        arr[i][4].setText("");
                     }
                     boardState[i] = O;
                 }
@@ -274,6 +271,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     public void reset() {
         for (int i = 0; i < arr.length; i++) {
+            boardState[i]=noWin;
             for (int j = 0; j < arr.length; j++) {
                 arr[i][j].setText("");
                 arr[i][j].setEnabled(true);
