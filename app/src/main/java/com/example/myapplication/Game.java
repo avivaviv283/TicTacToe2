@@ -19,7 +19,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     final int noWin = 0;
     final int X = 1;
     final int O = 2;
-    TextView tvWIn;
+    TextView tvWin;
     Intent goMenu;
     int counter = 0;
     int btnCount = 0;
@@ -29,8 +29,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        tvWIn = findViewById(R.id.tvWin);
-        tvWIn.setVisibility(View.INVISIBLE);
+        tvWin = findViewById(R.id.tvWin);
+        tvWin.setVisibility(View.INVISIBLE);
         btnResetGame = findViewById(R.id.btnResetGame);
         btnResetGame.setOnClickListener(this);
         btnResetGame.setVisibility(View.INVISIBLE);
@@ -168,54 +168,63 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         } else {
             int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1;
             int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
-
-            if (!arr[i][j].getText().equals("")) {
-                Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
+            if (!isWinBigSquare(i).equals("")) {
+                tvWin.setText(isWinBigSquare(i) + "Wins!");
+                tvWin.setVisibility(View.VISIBLE);
+                for (int k = 0; k < arr.length; k++) {
+                    for (int l = 0; l < arr.length; l++) {
+                        arr[k][l].setEnabled(false);
+                    }
+                }
             } else {
-
-
-                if (counter % 2 == 0) {
-                    arr[i][j].setText("O");
-
+                if (!arr[i][j].getText().equals("")) {
+                    Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
                 } else {
-                    arr[i][j].setText("X");
+                    if (counter % 2 == 0) {
+                        arr[i][j].setText("O");
 
-                }
-                counter++;
+                    } else {
+                        arr[i][j].setText("X");
 
-                goTo = j;
-                disable();
-                if (boardState[goTo] != noWin) {
-                    enable();
-                }
-                if (isSameSquare(i, j)&& !winSquare(i,j).equals("")) {
-                    enable();
-                }
-
-
-                if (!winSquare(i, j).equals("")) {
-                    for (int k = 0; k < arr.length; k++) {
-                        arr[i][k].setEnabled(false);
                     }
-                }
+                    counter++;
 
-                if (winSquare(i, j).equals("X")) {
-                    for (int l=0;l<arr.length;l++){
-                        arr[i][l].setText("");
+                    goTo = j;
+                    disable();
+                    if (boardState[goTo] != noWin) {
+                        enable();
                     }
-                    for (int k = 0; k < arr.length; k += 2) {
-                        arr[i][k].setText("X");
+                    if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {
+                        enable();
                     }
-                    boardState[i] = X;
-                }
-                if (winSquare(i, j).equals("O")) {
-                    for (int k = 0; k < arr.length; k++) {
-                        if (k != 4) {
-                            arr[i][k].setText("O");
+
+
+                    if (!winSquare(i, j).equals("")) {
+                        for (int k = 0; k < arr.length; k++) {
+                            arr[i][k].setEnabled(false);
                         }
-                        arr[i][4].setText("");
                     }
-                    boardState[i] = O;
+
+                    if (winSquare(i, j).equals("X")) {
+                        for (int l = 0; l < arr.length; l++) {
+                            arr[i][l].setText("");
+                        }
+                        for (int k = 0; k < arr.length; k += 2) {
+                            arr[i][k].setText("X");
+                        }
+                        boardState[i] = X;
+                    }
+                    if (winSquare(i, j).equals("O")) {
+                        for (int k = 0; k < arr.length; k++) {
+                            if (k != 4) {
+                                arr[i][k].setText("O");
+                            }
+                            arr[i][4].setText("");
+                        }
+                        boardState[i] = O;
+                    }
+
+
                 }
 
             }
@@ -250,8 +259,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(true);
                 }
-            }
-            else {
+            } else {
                 for (int l = 0; l < temp.length; l++) {
                     temp[i][l].setEnabled(false);
                 }
@@ -271,7 +279,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     public void reset() {
         for (int i = 0; i < arr.length; i++) {
-            boardState[i]=noWin;
+            boardState[i] = noWin;
             for (int j = 0; j < arr.length; j++) {
                 arr[i][j].setText("");
                 arr[i][j].setEnabled(true);
@@ -365,6 +373,89 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
         return "";
+    }
+
+    public boolean findBigColumn(int i) {
+        int flag = 0;
+        int text = boardState[i];
+        for (int k = i % 3; k <= 8; k += 3) {
+            if (!(boardState[k] == text)) {
+                break;
+            }
+            flag++;
+        }
+        if (flag == 3) {
+            return true;
+        }
+        return false;
+
+
+    }
+
+    public boolean findBigRow(int i) {
+        int flag = 0;
+        int text = boardState[i];
+        for (int k = i - i % 3; k < i - i % 3 + 3; k++) {
+            if (!(boardState[k] == text)) {
+                break;
+            }
+            flag++;
+        }
+        if (flag == 3) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean findBigDiagonal(int i) {
+        int flag = 0;
+        int text = boardState[i];
+        if (i % 2 == 0) {
+            if (i % 4 == 0) {
+                for (int k = 0; k <= 8; k += 4) {
+
+                    if (!(boardState[k] == text)) {
+                        break;
+                    }
+                    flag++;
+
+                }
+                if (flag == 3) {
+                    return true;
+                }
+                flag = 0;
+
+            }
+            if (i == 4 || i % 4 != 0) {
+                for (int k = 2; k <= 6; k += 2) {
+                    if (!(boardState[k] == text)) {
+
+                        break;
+                    }
+                    flag++;
+
+                }
+                if (flag == 3) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+
+    }
+
+    public String isWinBigSquare(int i) {
+        int text = boardState[i];
+        if (findBigColumn(i) || findBigRow(i) || findBigDiagonal(i)) {
+            if (text == X)
+                return "X";
+            if (text == O)
+                return "O";
+        }
+        return "";
+
+
     }
 
 
