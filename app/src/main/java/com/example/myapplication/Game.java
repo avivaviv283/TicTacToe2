@@ -178,7 +178,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 }
             } else {
                 if (!arr[i][j].getText().equals("")) {
-                    Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
                 } else {
                     if (counter % 2 == 0) {
                         arr[i][j].setText("O");
@@ -379,7 +379,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         int flag = 0;
         int text = boardState[i];
         for (int k = i % 3; k <= 8; k += 3) {
-            if (!(boardState[k] == text)) {
+            if (boardState[k] != text && boardState[k]==noWin ) {
                 break;
             }
             flag++;
@@ -396,7 +396,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         int flag = 0;
         int text = boardState[i];
         for (int k = i - i % 3; k < i - i % 3 + 3; k++) {
-            if (!(boardState[k] == text)) {
+            if (boardState[k] != text) {
                 break;
             }
             flag++;
@@ -414,7 +414,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (i % 4 == 0) {
                 for (int k = 0; k <= 8; k += 4) {
 
-                    if (!(boardState[k] == text)) {
+                    if (boardState[k] != text) {
                         break;
                     }
                     flag++;
@@ -428,7 +428,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
             if (i == 4 || i % 4 != 0) {
                 for (int k = 2; k <= 6; k += 2) {
-                    if (!(boardState[k] == text)) {
+                    if (boardState[k] != text) {
 
                         break;
                     }
