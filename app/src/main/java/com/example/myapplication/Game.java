@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
     Button[] btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9;
@@ -20,7 +22,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     final int X = 1;
     final int O = 2;
 
-    TextView tvWin;
+    TextView tvWin, indicateTurn;
     Intent goMenu;
     int counter = 0;
     int btnCount = 0;
@@ -35,6 +37,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         btnResetGame = findViewById(R.id.btnResetGame);
         btnResetGame.setOnClickListener(this);
         btnResetGame.setVisibility(View.INVISIBLE);
+        indicateTurn = findViewById(R.id.indicateTurn);
         btnsg1 = new Button[9];
         btnsg2 = new Button[9];
         btnsg3 = new Button[9];
@@ -146,10 +149,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         arr[8] = btnsg9;
 
         setArr();
-
-        for (int i = 0; i < boardState.length; i++) {
-            boardState[i] = noWin;
-        }
+        Arrays.fill(boardState, noWin);
     }
 
     public void setArr() {
@@ -170,21 +170,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1;
             int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
 
-
             if (!arr[i][j].getText().equals("")) {
                 Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
             } else {
-                if (counter % 2 == 0) {
-                    arr[i][j].setText("O");
-
-                } else {
-                    arr[i][j].setText("X");
-
-                }
+                takeTurn(i, j);
                 counter++;
-
                 goTo = j;
                 disable();
+
                 if (boardState[goTo] != noWin) {
                     enable();
                 }
@@ -197,35 +190,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                     for (int k = 0; k < arr.length; k++) {
                         arr[i][k].setEnabled(false);
                     }
+                    indicateWin(i, j);
 
-
-                    if (winSquare(i, j).equals("X")) {
-                        for (int l = 0; l < arr.length; l++) {
-                            arr[i][l].setText("");
-
-                        }
-                        for (int k = 0; k < arr.length; k += 2) {
-                            arr[i][k].setText("X");
-                        }
-                        boardState[i] = X;
-                    }
-                    if (winSquare(i, j).equals("O")) {
-                        for (int k = 0; k < arr.length; k++) {
-                            if (k != 4) {
-                                arr[i][k].setText("O");
-                            }
-                            arr[i][4].setText("");
-                        }
-                        boardState[i] = O;
-                    }
                     if (!isWinBigSquare(i).equals("")) {
-                        tvWin.setText(isWinBigSquare(i) + "Wins!");
-                        tvWin.setVisibility(View.VISIBLE);
-                        for (int k = 0; k < arr.length; k++) {
-                            for (int l = 0; l < arr.length; l++) {
-                                arr[k][l].setEnabled(false);
-                            }
-                        }
+                        indicateBigWin(i);
+                        indicateTurn.setVisibility(View.GONE);
                     }
 
                 }
@@ -236,8 +205,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    public void takeTurn(int i, int j) {
+        indicateTurn.setVisibility(View.VISIBLE);
+        if (counter % 2 == 0) {
+            arr[i][j].setText("O");
+            indicateTurn.setText("X turn");
 
-    public Button[][] disable() {
+        } else {
+            arr[i][j].setText("X");
+            indicateTurn.setText("O turn");
+
+        }
+    }
+
+
+    public void disable() {
         Button[][] temp = arr;
         for (int i = 0; i < temp.length; i++) {
             if (i != goTo) {
@@ -251,10 +233,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
 
         }
-        return temp;
     }
 
-    public Button[][] enable() {
+    public void enable() {
         Button[][] temp = arr;
         for (int i = 0; i < temp.length; i++) {
             if (boardState[i] == noWin) {
@@ -267,7 +248,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         }
-        return temp;
     }
 
     public boolean isSameSquare(int i, int j) {
@@ -458,6 +438,39 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return "";
 
 
+    }
+
+    public void indicateWin(int i, int j) {
+        if (winSquare(i, j).equals("X")) {
+            for (int l = 0; l < arr.length; l++) {
+                arr[i][l].setText("");
+
+            }
+            for (int k = 0; k < arr.length; k += 2) {
+                arr[i][k].setText("X");
+            }
+            boardState[i] = X;
+        }
+        if (winSquare(i, j).equals("O")) {
+            for (int k = 0; k < arr.length; k++) {
+                if (k != 4) {
+                    arr[i][k].setText("O");
+                }
+                arr[i][4].setText("");
+            }
+            boardState[i] = O;
+        }
+
+    }
+
+    public void indicateBigWin(int i) {
+        tvWin.setText(isWinBigSquare(i) + "Wins!");
+        tvWin.setVisibility(View.VISIBLE);
+        for (int k = 0; k < arr.length; k++) {
+            for (int l = 0; l < arr.length; l++) {
+                arr[k][l].setEnabled(false);
+            }
+        }
     }
 
 
