@@ -19,6 +19,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     final int noWin = 0;
     final int X = 1;
     final int O = 2;
+
     TextView tvWin;
     Intent goMenu;
     int counter = 0;
@@ -168,46 +169,40 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         } else {
             int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1;
             int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
-            if (!isWinBigSquare(i).equals("")) {
-                tvWin.setText(isWinBigSquare(i) + "Wins!");
-                tvWin.setVisibility(View.VISIBLE);
-                for (int k = 0; k < arr.length; k++) {
-                    for (int l = 0; l < arr.length; l++) {
-                        arr[k][l].setEnabled(false);
-                    }
-                }
+
+
+            if (!arr[i][j].getText().equals("")) {
+                Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
             } else {
-                if (!arr[i][j].getText().equals("")) {
-                     Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
+                if (counter % 2 == 0) {
+                    arr[i][j].setText("O");
+
                 } else {
-                    if (counter % 2 == 0) {
-                        arr[i][j].setText("O");
+                    arr[i][j].setText("X");
 
-                    } else {
-                        arr[i][j].setText("X");
+                }
+                counter++;
 
+                goTo = j;
+                disable();
+                if (boardState[goTo] != noWin) {
+                    enable();
+                }
+                if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {
+                    enable();
+                }
+
+                if (!winSquare(i, j).equals("")) {
+
+                    for (int k = 0; k < arr.length; k++) {
+                        arr[i][k].setEnabled(false);
                     }
-                    counter++;
 
-                    goTo = j;
-                    disable();
-                    if (boardState[goTo] != noWin) {
-                        enable();
-                    }
-                    if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {
-                        enable();
-                    }
-
-
-                    if (!winSquare(i, j).equals("")) {
-                        for (int k = 0; k < arr.length; k++) {
-                            arr[i][k].setEnabled(false);
-                        }
-                    }
 
                     if (winSquare(i, j).equals("X")) {
                         for (int l = 0; l < arr.length; l++) {
                             arr[i][l].setText("");
+
                         }
                         for (int k = 0; k < arr.length; k += 2) {
                             arr[i][k].setText("X");
@@ -223,10 +218,17 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                         }
                         boardState[i] = O;
                     }
-
+                    if (!isWinBigSquare(i).equals("")) {
+                        tvWin.setText(isWinBigSquare(i) + "Wins!");
+                        tvWin.setVisibility(View.VISIBLE);
+                        for (int k = 0; k < arr.length; k++) {
+                            for (int l = 0; l < arr.length; l++) {
+                                arr[k][l].setEnabled(false);
+                            }
+                        }
+                    }
 
                 }
-
             }
         }
         if (btnResetGame.getVisibility() == View.INVISIBLE) {
@@ -379,7 +381,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         int flag = 0;
         int text = boardState[i];
         for (int k = i % 3; k <= 8; k += 3) {
-            if (boardState[k] != text && boardState[k]==noWin ) {
+            if (boardState[k] != text && boardState[k] == noWin) {
                 break;
             }
             flag++;
