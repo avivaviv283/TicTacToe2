@@ -174,8 +174,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
             } else {
                 takeTurn(i, j);
-                counter++;
-                goTo = j;
                 disable();
 
                 if (boardState[goTo] != noWin) {
@@ -186,7 +184,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 }
 
                 if (!winSquare(i, j).equals("")) {
-
                     for (int k = 0; k < arr.length; k++) {
                         arr[i][k].setEnabled(false);
                     }
@@ -194,7 +191,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                     if (!isWinBigSquare(i).equals("")) {
                         indicateBigWin(i);
-                        indicateTurn.setVisibility(View.GONE);
+
+                    }
+
+                    if (allFilled(i) && isWinBigSquare(i).equals("")) {
+                        indicateNoWin(i);
                     }
 
                 }
@@ -203,6 +204,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (btnResetGame.getVisibility() == View.INVISIBLE) {
             btnResetGame.setVisibility(View.VISIBLE);
         }
+
     }
 
     public void takeTurn(int i, int j) {
@@ -216,6 +218,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             indicateTurn.setText("O turn");
 
         }
+        counter++;
+        goTo = j;
     }
 
 
@@ -260,6 +264,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
     public void reset() {
+        tvWin.setVisibility(View.INVISIBLE);
+        indicateTurn.setVisibility(View.INVISIBLE);
         for (int i = 0; i < arr.length; i++) {
             boardState[i] = noWin;
             for (int j = 0; j < arr.length; j++) {
@@ -361,7 +367,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         int flag = 0;
         int text = boardState[i];
         for (int k = i % 3; k <= 8; k += 3) {
-            if (boardState[k] != text && boardState[k] == noWin) {
+            if (boardState[k] != text) {
                 break;
             }
             flag++;
@@ -460,17 +466,39 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
             boardState[i] = O;
         }
+        if (allFilled(i)) {
+
+        }
 
     }
 
     public void indicateBigWin(int i) {
         tvWin.setText(isWinBigSquare(i) + "Wins!");
         tvWin.setVisibility(View.VISIBLE);
+        indicateTurn.setVisibility(View.GONE);
         for (int k = 0; k < arr.length; k++) {
             for (int l = 0; l < arr.length; l++) {
                 arr[k][l].setEnabled(false);
             }
         }
+    }
+
+    public boolean allFilled(int i) {
+        int count = 0;
+        for (int k = 0; k < boardState.length; k++) {
+            if (boardState[k] != noWin) {
+                count++;
+            }
+        }
+        return count == 9;
+    }
+
+    public void indicateNoWin(int i) {
+        if (allFilled(i)) {
+            tvWin.setVisibility(View.VISIBLE);
+            tvWin.setText("No one Win!");
+        }
+
     }
 
 
