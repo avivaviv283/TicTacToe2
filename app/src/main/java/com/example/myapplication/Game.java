@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
@@ -501,6 +507,21 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    public void sendStats(int i) {
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput("stats.txt", Context.MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(counter);
+            if (isWinBigSquare(i).equals("X"))
+                bw.write("X");
+            if (isWinBigSquare(i).equals("O"))
+                bw.write("O");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 
