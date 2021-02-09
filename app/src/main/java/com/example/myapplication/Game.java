@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -508,12 +509,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void sendStats(int i) {
+
         FileOutputStream fos = null;
         try {
-            fos = openFileOutput("stats.txt", Context.MODE_APPEND);
+            fos = openFileOutput("stats1.txt", Context.MODE_APPEND);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             BufferedWriter bw = new BufferedWriter(osw);
-            bw.write(counter);
+//          bw.write(counter);
             if (isWinBigSquare(i).equals("X"))
                 bw.write("X");
             if (isWinBigSquare(i).equals("O"))

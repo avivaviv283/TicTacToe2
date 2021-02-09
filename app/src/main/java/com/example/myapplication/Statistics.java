@@ -24,7 +24,7 @@ import java.nio.Buffer;
 import static java.lang.Integer.parseInt;
 
 public class Statistics extends AppCompatActivity {
-    Button toMenu;
+    Button toMenu,reset;
     Intent goMenu;
     TextView timeO, timeX, timePressed;
     FileInputStream fis;
@@ -40,20 +40,31 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         toMenu = findViewById(R.id.menu);
+        reset=findViewById(R.id.reset);
         timeO = findViewById(R.id.timeO);
         timeX = findViewById(R.id.timeX);
         timePressed = findViewById(R.id.timePressed);
+        readStats();
+    }
+
+
+    public void goMenu(View view) {
+        goMenu = new Intent(this, MainActivity.class);
+        startActivity(goMenu);
+    }
+
+
+    public void readStats() {
         try {
-            fis = openFileInput("stats.txt");
+            fis = openFileInput("stats1.txt");
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
             while ((st = br.readLine()) != null) {
-                if (!st.equals("X") && !st.equals("O")) {
-                    if ((Integer) parseInt(st) > 0) {
-                        counter = (Integer) parseInt(st);
-
-                    }
-                }
+//                if (!st.equals("X") && !st.equals("O")) {
+//                    if (parseInt(st) > 0) {
+//                        counter = parseInt(st);
+//                    }
+//                }
                 if (st.equals("O"))
                     Owin++;
                 if (st.equals("X"))
@@ -69,12 +80,23 @@ public class Statistics extends AppCompatActivity {
         timePressed.setText("Time Pressed:" + counter);
         timeO.setText("Times O won: " + Owin);
         timeX.setText("Times X won: " + Xwin);
-
     }
 
 
-    public void goMenu(View view) {
-        goMenu = new Intent(this, MainActivity.class);
-        startActivity(goMenu);
+    public void resetStats(View view) {
+        try {
+            fis = openFileInput("stats1.txt");
+            isr = new InputStreamReader(fis);
+            br = new BufferedReader(isr);
+            while ((st = br.readLine()) != null) {
+                br.reset();
+            }
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

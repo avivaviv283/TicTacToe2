@@ -48,6 +48,15 @@
         android:text="Times O won:"
         android:textColor="@color/black"
         android:textSize="17dp" />
+    <Button
+        android:id="@+id/reset"
+        android:onClick="resetStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00AA99"
+        android:layout_margin="30dp"
+        android:text="Reset Statistics"/>
+
 
     <Button
         android:id="@+id/menu"
