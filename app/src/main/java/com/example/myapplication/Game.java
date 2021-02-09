@@ -197,11 +197,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                     if (!isWinBigSquare(i).equals("")) {
                         indicateBigWin(i);
+                        sendStats(i);
 
                     }
 
                     if (allFilled(i) && isWinBigSquare(i).equals("")) {
                         indicateNoWin(i);
+                        sendStats(i);
                     }
 
                 }
@@ -235,7 +237,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (i != goTo) {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(false);
-
                 }
             }
             for (int k = 0; k < arr[goTo].length; k++) {
@@ -500,17 +501,16 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void indicateNoWin(int i) {
-        if (allFilled(i)) {
-            tvWin.setVisibility(View.VISIBLE);
-            tvWin.setText("No one Win!");
-        }
+        tvWin.setVisibility(View.VISIBLE);
+        tvWin.setText("No one Win!");
+
 
     }
 
     public void sendStats(int i) {
         FileOutputStream fos = null;
         try {
-            fos = openFileOutput("stats.txt", Context.MODE_PRIVATE);
+            fos = openFileOutput("stats.txt", Context.MODE_APPEND);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             BufferedWriter bw = new BufferedWriter(osw);
             bw.write(counter);
@@ -518,10 +518,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 bw.write("X");
             if (isWinBigSquare(i).equals("O"))
                 bw.write("O");
+            if (allFilled(i)) {
+                bw.write("Tie");
+            }
+            bw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
+    }
 }
+
+
 

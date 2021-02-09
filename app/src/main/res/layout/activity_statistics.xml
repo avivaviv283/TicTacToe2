@@ -20,6 +20,7 @@
         android:textSize="30dp" />
 
     <TextView
+        android:id="@+id/timePressed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -29,6 +30,7 @@
         android:textSize="17dp" />
 
     <TextView
+        android:id="@+id/timeX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -38,6 +40,7 @@
         android:textSize="17dp" />
 
     <TextView
+        android:id="@+id/timeO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
