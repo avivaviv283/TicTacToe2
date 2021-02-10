@@ -511,17 +511,19 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void sendStats(int i) {
 
         FileOutputStream fos = null;
+        String countS = Integer.toString(counter);
+
         try {
-            fos = openFileOutput("stats1.txt", Context.MODE_APPEND);
+            fos = openFileOutput("stats.txt", Context.MODE_APPEND);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             BufferedWriter bw = new BufferedWriter(osw);
-//          bw.write(counter);
+            bw.write(countS + "\n");
             if (isWinBigSquare(i).equals("X"))
-                bw.write("X");
+                bw.write("X" + "\n");
             if (isWinBigSquare(i).equals("O"))
-                bw.write("O");
+                bw.write("O" + "\n");
             if (allFilled(i)) {
-                bw.write("Tie");
+                bw.write("T" + "\n");
             }
             bw.close();
         } catch (FileNotFoundException e) {

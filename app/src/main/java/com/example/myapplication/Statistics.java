@@ -56,15 +56,15 @@ public class Statistics extends AppCompatActivity {
 
     public void readStats() {
         try {
-            fis = openFileInput("stats1.txt");
+            fis = openFileInput("stats.txt");
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
             while ((st = br.readLine()) != null) {
-//                if (!st.equals("X") && !st.equals("O")) {
-//                    if (parseInt(st) > 0) {
-//                        counter = parseInt(st);
-//                    }
-//                }
+                if (!st.equals("X") && !st.equals("O")) {
+                    if (parseInt(st) > 0) {
+                        counter += Integer.parseInt(st);
+                    }
+                }
                 if (st.equals("O"))
                     Owin++;
                 if (st.equals("X"))
@@ -84,19 +84,21 @@ public class Statistics extends AppCompatActivity {
 
 
     public void resetStats(View view) {
+        FileOutputStream fos = null;
         try {
-            fis = openFileInput("stats1.txt");
-            isr = new InputStreamReader(fis);
-            br = new BufferedReader(isr);
-            while ((st = br.readLine()) != null) {
-                br.reset();
-            }
-            fis.close();
+            fos = openFileOutput("stats.txt", Context.MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        timePressed.setText("Time Pressed: 0" );
+        timeO.setText("Times O won: 0" );
+        timeX.setText("Times X won: 0");
+
     }
 
 }
