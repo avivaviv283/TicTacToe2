@@ -26,12 +26,12 @@ import static java.lang.Integer.parseInt;
 public class Statistics extends AppCompatActivity {
     Button toMenu,reset;
     Intent goMenu;
-    TextView timeO, timeX, timePressed;
+    TextView timeO, timeX, timePressed,tie;
     FileInputStream fis;
     InputStreamReader isr;
     BufferedReader br;
     String st;
-    int Owin, Xwin;
+    int Owin, Xwin ,Tie;
     int counter;
 
 
@@ -41,6 +41,7 @@ public class Statistics extends AppCompatActivity {
         setContentView(R.layout.activity_statistics);
         toMenu = findViewById(R.id.menu);
         reset=findViewById(R.id.reset);
+        tie=findViewById(R.id.tie);
         timeO = findViewById(R.id.timeO);
         timeX = findViewById(R.id.timeX);
         timePressed = findViewById(R.id.timePressed);
@@ -60,7 +61,7 @@ public class Statistics extends AppCompatActivity {
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
             while ((st = br.readLine()) != null) {
-                if (!st.equals("X") && !st.equals("O")) {
+                if (!st.equals("X") && !st.equals("O")&&!st.equals("T")) {
                     if (parseInt(st) > 0) {
                         counter += Integer.parseInt(st);
                     }
@@ -69,6 +70,8 @@ public class Statistics extends AppCompatActivity {
                     Owin++;
                 if (st.equals("X"))
                     Xwin++;
+                if(st.equals("T"))
+                   Tie++;
             }
 
             fis.close();
@@ -80,6 +83,8 @@ public class Statistics extends AppCompatActivity {
         timePressed.setText("Time Pressed:" + counter);
         timeO.setText("Times O won: " + Owin);
         timeX.setText("Times X won: " + Xwin);
+        tie.setText("Time Ties:"+ Tie);
+
     }
 
 

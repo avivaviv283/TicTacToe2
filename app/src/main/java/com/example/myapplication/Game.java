@@ -193,9 +193,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 }
 
                 if (!winSquare(i, j).equals("")) {
-                    for (int k = 0; k < arr.length; k++) {
-                        arr[i][k].setEnabled(false);
-                    }
+                    turnWonSquareDisabled(i);
                     indicateWin(i, j);
 
                     if (!isWinBigSquare(i).equals("")) {
@@ -217,7 +215,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
-
+    public void turnWonSquareDisabled(int i){
+        for (int k = 0; k < arr.length; k++) {
+            arr[i][k].setEnabled(false);
+            arr[i][k].setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
     public void takeTurn(int i, int j) {
         indicateTurn.setVisibility(View.VISIBLE);
         if (counter % 2 == 0) {
@@ -446,7 +449,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (winSquare(i, j).equals("X")) {
             for (int l = 0; l < arr.length; l++) {
                 arr[i][l].setText("");
-                arr[i][j].setBackgroundColor(Color.TRANSPARENT);
+
 
             }
             for (int k = 0; k < arr.length; k += 2) {
