@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     final int noWin = 0;
     final int X = 1;
     final int O = 2;
-
     TextView tvWin, indicateTurn;
     Intent goMenu;
     int counter = 0;
@@ -166,6 +167,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[i][j].setOnClickListener(this);
                 btnCount++;
                 arr[i][j].setBackgroundColor(Color.CYAN);
+                arr[i][j].getBackground().setAlpha(230);
             }
         }
     }
@@ -215,12 +217,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
-    public void turnWonSquareDisabled(int i){
+
+    public void turnWonSquareDisabled(int i) {
         for (int k = 0; k < arr.length; k++) {
             arr[i][k].setEnabled(false);
-            arr[i][k].setBackgroundColor(Color.TRANSPARENT);
+            arr[i][k].getBackground().setAlpha(100);
         }
     }
+
     public void takeTurn(int i, int j) {
         indicateTurn.setVisibility(View.VISIBLE);
         if (counter % 2 == 0) {
@@ -243,12 +247,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (i != goTo) {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(false);
-                    temp[i][j].setBackgroundColor(Color.TRANSPARENT);
+                    temp[i][j].getBackground().setAlpha(100);
                 }
             }
             for (int k = 0; k < arr[goTo].length; k++) {
                 arr[goTo][k].setEnabled(true);
                 arr[goTo][k].setBackgroundColor(Color.CYAN);
+                arr[goTo][k].getBackground().setAlpha(230);
             }
 
         }
@@ -261,11 +266,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(true);
                     temp[i][j].setBackgroundColor(Color.CYAN);
+                    temp[i][j].getBackground().setAlpha(230);
                 }
             } else {
                 for (int l = 0; l < temp.length; l++) {
                     temp[i][l].setEnabled(false);
-                    temp[i][l].setBackgroundColor(Color.TRANSPARENT);
+                    temp[i][l].getBackground().setAlpha(100);
                 }
             }
         }
@@ -286,6 +292,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[i][j].setText("");
                 arr[i][j].setEnabled(true);
                 arr[i][j].setBackgroundColor(Color.CYAN);
+                arr[i][j].getBackground().setAlpha(230);
             }
         }
     }
@@ -477,6 +484,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         for (int k = 0; k < arr.length; k++) {
             for (int l = 0; l < arr.length; l++) {
                 arr[k][l].setEnabled(false);
+                arr[k][l].getBackground().setAlpha(100);
             }
         }
     }

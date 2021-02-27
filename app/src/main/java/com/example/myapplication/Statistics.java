@@ -83,7 +83,7 @@ public class Statistics extends AppCompatActivity {
         timePressed.setText("Time Pressed:" + counter);
         timeO.setText("Times O won: " + Owin);
         timeX.setText("Times X won: " + Xwin);
-        tie.setText("Time Ties:"+ Tie);
+        tie.setText("Time Ties: "+ Tie);
 
     }
 
@@ -103,6 +103,7 @@ public class Statistics extends AppCompatActivity {
         timePressed.setText("Time Pressed: 0" );
         timeO.setText("Times O won: 0" );
         timeX.setText("Times X won: 0");
+        tie.setText("Time Ties: 0");
 
     }
 
