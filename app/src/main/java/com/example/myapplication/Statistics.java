@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -20,18 +22,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
 public class Statistics extends AppCompatActivity {
-    Button toMenu,reset;
+    Button toMenu, reset;
     Intent goMenu;
-    TextView timeO, timeX, timePressed,tie;
+    StatsRead stats = new StatsRead();
     FileInputStream fis;
     InputStreamReader isr;
     BufferedReader br;
     String st;
-    int Owin, Xwin ,Tie;
+    ArrayList<String> alStats;
+    ArrayAdapter adap;
+    ListView lvStats;
     int counter;
 
 
@@ -40,11 +46,8 @@ public class Statistics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         toMenu = findViewById(R.id.menu);
-        reset=findViewById(R.id.reset);
-        tie=findViewById(R.id.tie);
-        timeO = findViewById(R.id.timeO);
-        timeX = findViewById(R.id.timeX);
-        timePressed = findViewById(R.id.timePressed);
+        reset = findViewById(R.id.reset);
+        lvStats = findViewById(R.id.lvStats);
         readStats();
     }
 
@@ -61,17 +64,17 @@ public class Statistics extends AppCompatActivity {
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
             while ((st = br.readLine()) != null) {
-                if (!st.equals("X") && !st.equals("O")&&!st.equals("T")) {
+                if (!st.equals("X") && !st.equals("O") && !st.equals("T")) {
                     if (parseInt(st) > 0) {
                         counter += Integer.parseInt(st);
                     }
                 }
                 if (st.equals("O"))
-                    Owin++;
+                    stats.setOwin(parseInt(stats.getOwin()) + 1);
                 if (st.equals("X"))
-                    Xwin++;
-                if(st.equals("T"))
-                   Tie++;
+                    stats.setXwin(parseInt(stats.getXwin()) + 1);
+                if (st.equals("T"))
+                    stats.setTie(parseInt(stats.getTie()) + 1);
             }
 
             fis.close();
@@ -80,10 +83,14 @@ public class Statistics extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        timePressed.setText("Time Pressed:" + counter);
-        timeO.setText("Times O won: " + Owin);
-        timeX.setText("Times X won: " + Xwin);
-        tie.setText("Time Ties: "+ Tie);
+        stats.setNumPressed(counter);
+        alStats = new ArrayList<>();
+        alStats.add("Number of Presses: " + stats.getNumPressed());
+        alStats.add("X wins: " + stats.getXwin());
+        alStats.add("O wins: " + stats.getOwin());
+        alStats.add("Ties: " + stats.getTie());
+        adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alStats);
+        lvStats.setAdapter(adap);
 
     }
 
@@ -100,10 +107,6 @@ public class Statistics extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        timePressed.setText("Time Pressed: 0" );
-        timeO.setText("Times O won: 0" );
-        timeX.setText("Times X won: 0");
-        tie.setText("Time Ties: 0");
 
     }
 

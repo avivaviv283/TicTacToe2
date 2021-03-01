@@ -19,45 +19,14 @@
         android:textColor="@color/black"
         android:textSize="30dp" />
 
-    <TextView
-        android:id="@+id/timePressed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="casual"
-        android:text="Times Pressed:"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
+    <ListView
+        android:id="@+id/lvStats"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:dividerHeight="2dp"/>
 
-    <TextView
-        android:id="@+id/timeX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="casual"
-        android:text="Times X won:"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
 
-    <TextView
-        android:id="@+id/timeO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="casual"
-        android:text="Times O won:"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
 
-    <TextView
-        android:id="@+id/tie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="casual"
-        android:text="Times Tie:"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
     <Button
         android:id="@+id/reset"
         android:onClick="resetStats"

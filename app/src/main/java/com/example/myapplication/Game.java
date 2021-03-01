@@ -27,6 +27,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     Button btnResetGame;
     Button[][] arr = new Button[9][9];
     int[] boardState = new int[9];
+    StatsRead stats = new StatsRead();
     int goTo = 0;
     final int noWin = 0;
     final int X = 1;
