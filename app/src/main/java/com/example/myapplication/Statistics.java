@@ -107,6 +107,18 @@ public class Statistics extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        alStats.clear();
+        alStats.add("Number of Presses: 0" );
+        alStats.add("X wins: 0" );
+        alStats.add("O wins: 0" );
+        alStats.add("Ties: 0" );
+        adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, alStats);
+        lvStats.setAdapter(adap);
+
+        stats.setTie(0);
+        stats.setXwin(0);
+        stats.setNumPressed(0);
+        stats.setOwin(0);
 
     }
 
