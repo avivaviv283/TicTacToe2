@@ -1,14 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:title="Home"
-        android:id="@+id/homepage"/>
+        android:id="@+id/homepage"
+        android:title="Home" />
     <item
-        android:title="Statistics"
-        android:id="@+id/statspage"/>
+        android:id="@+id/statspage"
+        android:title="Statistics" />
     <item
-        android:title="Rules"
-        android:id="@+id/rulespage"/>
+        android:id="@+id/rulespage"
+        android:title="Rules" />
+    <item android:title="Rules:">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android">
+            <item
+                android:visible="false"
+                android:id="@+id/r1"
+                android:title="Rules 1:" />
+            <item
+                android:visible="false"
+                android:id="@+id/r2"
+                android:title="Rules2:"/>
 
+        </menu>
+    </item>
+
+
+    />
 
 
 </menu>

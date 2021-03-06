@@ -355,7 +355,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             if (j == 4 || j % 4 != 0) {
                 for (int k = 2; k <= 6; k += 2) {
                     if (!text.equals(arr[i][k].getText().toString())) {
-
                         break;
                     }
                     flag++;
