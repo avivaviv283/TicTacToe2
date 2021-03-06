@@ -14,13 +14,14 @@ import android.widget.Toast;
 
 public class Rules extends AppCompatActivity {
     Button rules2;
-    Intent goRules2, goMenu, goStats;
+    Intent goRules2,goRules3,goRules4,goRules5, goMenu, goStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
         rules2 = findViewById(R.id.rules2);
+
     }
 
     public void goRules2(View view) {
@@ -33,6 +34,7 @@ public class Rules extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mymenu, menu);
+        menu.findItem(R.id.allRules).setVisible(true);
         return true;
     }
 
@@ -48,6 +50,22 @@ public class Rules extends AppCompatActivity {
         } else if (item.getItemId() == R.id.homepage) {
             goMenu = new Intent(this, MainActivity.class);
             startActivity(goMenu);
+
+        } else if (item.getItemId() == R.id.r2) {
+            goRules2 = new Intent(this, Rules2.class);
+            startActivity(goRules2);
+        }
+        else if (item.getItemId() == R.id.r3) {
+            goRules3 = new Intent(this, Rules3.class);
+            startActivity(goRules3);
+        }
+        else if (item.getItemId() == R.id.r4) {
+            goRules4 = new Intent(this, Rules4.class);
+            startActivity(goRules4);
+        }
+        else if (item.getItemId() == R.id.r5) {
+            goRules5 = new Intent(this, Rules5.class);
+            startActivity(goRules5);
         }
         return true;
 

@@ -8,22 +8,30 @@
     <item
         android:id="@+id/rulespage"
         android:title="Rules" />
-    <item android:title="Rules:">
+    <item
+        android:id="@+id/allRules"
+        android:title="Rules:"
+        android:visible="false">
         <menu xmlns:android="http://schemas.android.com/apk/res/android">
             <item
-                android:visible="false"
-                android:id="@+id/r1"
-                android:title="Rules 1:" />
-            <item
-                android:visible="false"
                 android:id="@+id/r2"
-                android:title="Rules2:"/>
+                android:title="Rules 2:"
+                 />
+            <item
+                android:id="@+id/r3"
+                android:title="Rules3:"
+                />
+            <item
+                android:id="@+id/r4"
+                android:title="Rules4:"
+                />
+            <item
+                android:id="@+id/r5"
+                android:title="Rules5:"
+                />
 
         </menu>
     </item>
-
-
-    />
 
 
 </menu>
