@@ -2,7 +2,10 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +40,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     Intent goMenu;
     int counter = 0;
     int btnCount = 0;
+    GridLayout grid;
 
 
     @Override
@@ -48,6 +53,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         btnResetGame.setOnClickListener(this);
         btnResetGame.setVisibility(View.INVISIBLE);
         indicateTurn = findViewById(R.id.indicateTurn);
+        grid = findViewById(R.id.grid);
         btnsg1 = new Button[9];
         btnsg2 = new Button[9];
         btnsg3 = new Button[9];
@@ -168,7 +174,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[i][j].setOnClickListener(this);
                 btnCount++;
                 arr[i][j].setBackgroundColor(Color.CYAN);
-                arr[i][j].getBackground().setAlpha(230);
+                arr[i][j].getBackground().setAlpha(255);
             }
         }
     }
@@ -199,16 +205,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                     turnWonSquareDisabled(i);
                     indicateWin(i, j);
 
+
                     if (!isWinBigSquare(i).equals("")) {
                         indicateBigWin(i);
                         sendStats(i);
+                        createDialog();
+
+
 
                     }
 
                     if (allFilled(i) && isWinBigSquare(i).equals("")) {
                         indicateNoWin(i);
                         sendStats(i);
+                        createDialog();
+
                     }
+
 
                 }
             }
@@ -254,7 +267,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             for (int k = 0; k < arr[goTo].length; k++) {
                 arr[goTo][k].setEnabled(true);
                 arr[goTo][k].setBackgroundColor(Color.CYAN);
-                arr[goTo][k].getBackground().setAlpha(230);
+                arr[goTo][k].getBackground().setAlpha(255);
             }
 
         }
@@ -267,7 +280,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 for (int j = 0; j < temp.length; j++) {
                     temp[i][j].setEnabled(true);
                     temp[i][j].setBackgroundColor(Color.CYAN);
-                    temp[i][j].getBackground().setAlpha(230);
+                    temp[i][j].getBackground().setAlpha(255);
                 }
             } else {
                 for (int l = 0; l < temp.length; l++) {
@@ -293,7 +306,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[i][j].setText("");
                 arr[i][j].setEnabled(true);
                 arr[i][j].setBackgroundColor(Color.CYAN);
-                arr[i][j].getBackground().setAlpha(230);
+                arr[i][j].getBackground().setAlpha(255);
             }
         }
     }
@@ -388,7 +401,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
         return flag == 3;
 
-
     }
 
     public boolean findBigRow(int i) {
@@ -448,6 +460,45 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 return "O";
         }
         return "";
+
+
+    }
+    public void createDialog(){
+        AlertDialog d = new AlertDialog.Builder(this).create();
+        AlertDialog d1 = new AlertDialog.Builder(this).create();
+        d.setTitle("Did you enjoy the game?");
+        d1.setTitle("What would you rate the game?");
+        d.setCancelable(false);
+        d1.setCancelable(false);
+        d.setButton(AlertDialog.BUTTON_NEUTRAL, "Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                d1.show();
+                dialog.dismiss();
+            }
+        });
+        d.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                d1.show();
+                dialog.dismiss();
+            }
+        });
+        d1.setButton(AlertDialog.BUTTON_NEUTRAL, "5 Stars", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        d1.setButton(AlertDialog.BUTTON_POSITIVE, "5 Stars", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        d.show();
+        Toast.makeText(this, "Thanks for your Rating!", Toast.LENGTH_SHORT).show();
+
 
 
     }
