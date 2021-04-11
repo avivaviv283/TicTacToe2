@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
+import java.util.List;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
@@ -167,7 +171,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         setArr();
         Arrays.fill(boardState, noWin);
     }
-
+//  Sets all Listeners for Buttons
     public void setArr() {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
@@ -185,37 +189,36 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (btnResetGame == v) {
             this.reset();
         } else {
-            int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1;
-            int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1;
+            int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1; // Gets location of primary square
+            int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1; // Gets loaction of secondary square
 
-            if (!arr[i][j].getText().equals("")) {
+            if (!arr[i][j].getText().equals("")) { // Unable to click on filled square
                 Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
             } else {
                 takeTurn(i, j);
                 disable();
 
-                if (boardState[goTo] != noWin) {
+                if (boardState[goTo] != noWin) { //
                     enable();
                 }
-                if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {
+                if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {// checks if secondary square clicked goes to the same primary square
                     enable();
                 }
 
-                if (!winSquare(i, j).equals("")) {
+                if (!winSquare(i, j).equals("")) { // Checks if any primary square is won
                     turnWonSquareDisabled(i);
                     indicateWin(i, j);
 
 
-                    if (!isWinBigSquare(i).equals("")) {
+                    if (!isWinBigSquare(i).equals("")) {// Checks if the game ended and there is a winner
                         indicateBigWin(i);
                         sendStats(i);
                         createDialog();
 
 
-
                     }
 
-                    if (allFilled(i) && isWinBigSquare(i).equals("")) {
+                    if (allFilled(i) && isWinBigSquare(i).equals("")) { // Checks if the game ended and there is not a winner
                         indicateNoWin(i);
                         sendStats(i);
                         createDialog();
@@ -226,20 +229,20 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 }
             }
         }
-        if (btnResetGame.getVisibility() == View.INVISIBLE) {
+        if (btnResetGame.getVisibility() == View.INVISIBLE) { // Reset board button
             btnResetGame.setVisibility(View.VISIBLE);
         }
 
     }
 
-    public void turnWonSquareDisabled(int i) {
+    public void turnWonSquareDisabled(int i) { // Setting a primary square disabled
         for (int k = 0; k < arr.length; k++) {
             arr[i][k].setEnabled(false);
             arr[i][k].getBackground().setAlpha(100);
         }
     }
 
-    public void takeTurn(int i, int j) {
+    public void takeTurn(int i, int j) { // Switch turns every button click
         indicateTurn.setVisibility(View.VISIBLE);
         if (counter % 2 == 0) {
             arr[i][j].setText("O");
@@ -255,7 +258,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void disable() {
+    public void disable() { // disables entire board leaving undecided squares enabled
         Button[][] temp = arr;
         for (int i = 0; i < temp.length; i++) {
             if (i != goTo) {
@@ -273,7 +276,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public void enable() {
+    public void enable() { // enables all squares that are undecided
         Button[][] temp = arr;
         for (int i = 0; i < temp.length; i++) {
             if (boardState[i] == noWin) {
@@ -291,13 +294,13 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    public boolean isSameSquare(int i, int j) {
+    public boolean isSameSquare(int i, int j) { // checks if a primary square and a secondary square has the same value
         return i == j;
 
     }
 
 
-    public void reset() {
+    public void reset() { // Resets entire board
         tvWin.setVisibility(View.INVISIBLE);
         indicateTurn.setVisibility(View.INVISIBLE);
         for (int i = 0; i < arr.length; i++) {
@@ -317,7 +320,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         startActivity(goMenu);
     }
 
-    public boolean findColumn(int i, int j) {
+    public boolean findColumn(int i, int j) { // Find if any player won a primary square by completing column
         int flag = 0;
         String text = arr[i][j].getText().toString();
         for (int k = j % 3; k <= 8; k += 3) {
@@ -331,7 +334,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return flag == 3;
     }
 
-    public boolean findRow(int i, int j) {
+    public boolean findRow(int i, int j) { // Find if any player won a primary square by completing row
         int flag = 0;
         String text = arr[i][j].getText().toString();
         for (int k = j - j % 3; k < j - j % 3 + 3; k++) {
@@ -346,7 +349,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return flag == 3;
     }
 
-    public boolean findDiagonal(int i, int j) {
+    public boolean findDiagonal(int i, int j) { // Find if any player won a primary square by completing diagonal
         int flag = 0;
         String text = arr[i][j].getText().toString();
         if (j % 2 == 0) {
@@ -381,7 +384,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public String winSquare(int i, int j) {
+    public String winSquare(int i, int j) { // Checks whether any player won a primary square and returns player's played  shape
         String text = arr[i][j].getText().toString();
         if (findRow(i, j) || findColumn(i, j) || findDiagonal(i, j)) {
             return text;
@@ -390,7 +393,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return "";
     }
 
-    public boolean findBigColumn(int i) {
+    public boolean findBigColumn(int i) { // Checks if any player won the game by getting 3 primary squares in a column
         int flag = 0;
         int text = boardState[i];
         for (int k = i % 3; k <= 8; k += 3) {
@@ -403,7 +406,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public boolean findBigRow(int i) {
+    public boolean findBigRow(int i) { // Checks if any player won the game by getting 3 primary squares in a row
         int flag = 0;
         int text = boardState[i];
         for (int k = i - i % 3; k < i - i % 3 + 3; k++) {
@@ -415,7 +418,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return flag == 3;
     }
 
-    public boolean findBigDiagonal(int i) {
+    public boolean findBigDiagonal(int i) { // Checks if any player won the game by getting 3 primary squares in a row
         int flag = 0;
         int text = boardState[i];
         if (i % 2 == 0) {
@@ -451,7 +454,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public String isWinBigSquare(int i) {
+    public String isWinBigSquare(int i) { // checks whether any play won the game and returning the player's played shape
         int text = boardState[i];
         if (findBigColumn(i) || findBigRow(i) || findBigDiagonal(i)) {
             if (text == X)
@@ -463,7 +466,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
     }
-    public void createDialog(){
+
+    public void createDialog() { // Creates a rating dialog
         AlertDialog d = new AlertDialog.Builder(this).create();
         AlertDialog d1 = new AlertDialog.Builder(this).create();
         d.setTitle("Did you enjoy the game?");
@@ -485,30 +489,36 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
         });
         d1.setButton(AlertDialog.BUTTON_NEUTRAL, "5 Stars", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                makeToast();
             }
+
         });
         d1.setButton(AlertDialog.BUTTON_POSITIVE, "5 Stars", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 dialog.dismiss();
+                makeToast();
             }
         });
-        d.show();
-        Toast.makeText(this, "Thanks for your Rating!", Toast.LENGTH_SHORT).show();
 
+        d.show();
 
 
     }
 
-    public void indicateWin(int i, int j) {
+    public void makeToast() {
+        Toast.makeText(this, "Thanks for rating us!", Toast.LENGTH_LONG).show();
+    }
+
+    public void indicateWin(int i, int j) { // indicating win if any player won a primary square
         if (winSquare(i, j).equals("X")) {
             for (int l = 0; l < arr.length; l++) {
                 arr[i][l].setText("");
-
-
             }
             for (int k = 0; k < arr.length; k += 2) {
                 arr[i][k].setText("X");
@@ -526,9 +536,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
 
+
     }
 
-    public void indicateBigWin(int i) {
+    public void indicateBigWin(int i) { // indicating win if any player won the game
         tvWin.setText(isWinBigSquare(i) + "Wins!");
         tvWin.setVisibility(View.VISIBLE);
         indicateTurn.setVisibility(View.GONE);
@@ -538,9 +549,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[k][l].getBackground().setAlpha(100);
             }
         }
+        tvWin.animate().rotation(360f).alpha(256).setDuration(Toast.LENGTH_LONG);
     }
 
-    public boolean allFilled(int i) {
+    public boolean allFilled(int i) { // checks if all the primary squares are filled
         int count = 0;
         for (int k = 0; k < boardState.length; k++) {
             if (boardState[k] != noWin) {
@@ -550,14 +562,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         return count == 9;
     }
 
-    public void indicateNoWin(int i) {
+    public void indicateNoWin(int i) { // indicating a tie
         tvWin.setVisibility(View.VISIBLE);
         tvWin.setText("No one Win!");
 
 
     }
 
-    public void sendStats(int i) {
+    public void sendStats(int i) { // sends stats to file
 
         FileOutputStream fos = null;
         String countS = Integer.toString(counter);
