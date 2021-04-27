@@ -1,12 +1,8 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,13 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
-import java.util.List;
 
 public class Game extends AppCompatActivity implements View.OnClickListener {
 
@@ -171,7 +165,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         setArr();
         Arrays.fill(boardState, noWin);
     }
-//  Sets all Listeners for Buttons
+
+    //  Sets all Listeners for Buttons
     public void setArr() {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
@@ -198,7 +193,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 takeTurn(i, j);
                 disable();
 
-                if (boardState[goTo] != noWin) { //
+                if (boardState[goTo] != noWin) {
                     enable();
                 }
                 if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {// checks if secondary square clicked goes to the same primary square
@@ -216,6 +211,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                         createDialog();
 
 
+
                     }
 
                     if (allFilled(i) && isWinBigSquare(i).equals("")) { // Checks if the game ended and there is not a winner
@@ -223,7 +219,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                         sendStats(i);
                         createDialog();
 
+
                     }
+
 
 
                 }
@@ -318,6 +316,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void goMenu(View view) {
         goMenu = new Intent(this, MainActivity.class);
         startActivity(goMenu);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
     public boolean findColumn(int i, int j) { // Find if any player won a primary square by completing column
@@ -494,6 +493,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 makeToast();
+
+
             }
 
         });
@@ -503,6 +504,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
                 dialog.dismiss();
                 makeToast();
+
+
             }
         });
 
@@ -522,6 +525,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
             for (int k = 0; k < arr.length; k += 2) {
                 arr[i][k].setText("X");
+                makeAnim(arr[i][k]);
             }
             boardState[i] = X;
         }
@@ -529,6 +533,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             for (int k = 0; k < arr.length; k++) {
                 if (k != 4) {
                     arr[i][k].setText("O");
+                    makeAnim(arr[i][k]);
                 }
                 arr[i][4].setText("");
             }
@@ -536,10 +541,20 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         }
 
 
+    }
+
+    public void makeAnim(Object o) {
+        Animation enlarge = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+        if (o instanceof Button) {
+            ((Button) o).setAnimation(enlarge);
+        }
+        if (o instanceof TextView)
+            ((TextView) o).setAnimation(enlarge);
 
     }
 
     public void indicateBigWin(int i) { // indicating win if any player won the game
+
         tvWin.setText(isWinBigSquare(i) + "Wins!");
         tvWin.setVisibility(View.VISIBLE);
         indicateTurn.setVisibility(View.GONE);
@@ -549,7 +564,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                 arr[k][l].getBackground().setAlpha(100);
             }
         }
-        tvWin.animate().rotation(360f).alpha(256).setDuration(Toast.LENGTH_LONG);
     }
 
     public boolean allFilled(int i) { // checks if all the primary squares are filled

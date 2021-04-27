@@ -60,6 +60,7 @@ public class Statistics extends AppCompatActivity {
     public void goMenu(View view) {
         goMenu = new Intent(this, MainActivity.class);
         startActivity(goMenu);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
 
@@ -141,10 +142,12 @@ public class Statistics extends AppCompatActivity {
         } else if (item.getItemId() == R.id.rulespage) {
             goRules = new Intent(this, Rules.class);
             startActivity(goRules);
+            overridePendingTransition(R.anim.activityin,R.anim.activityout);
             return true;
         } else if (item.getItemId() == R.id.homepage) {
             goMenu = new Intent(this, MainActivity.class);
             startActivity(goMenu);
+            overridePendingTransition(R.anim.activityin,R.anim.activityout);
         }
         return true;
 

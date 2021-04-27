@@ -29,16 +29,19 @@ public class MainActivity extends AppCompatActivity {
     public void goRules(View view) {
         goRules = new Intent(this, Rules.class);
         startActivity(goRules);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
     public void goGame(View view) {
         goGame = new Intent(this, Game.class);
         startActivity(goGame);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
     public void goStats(View view) {
         goStatistics = new Intent(this, Statistics.class);
         startActivity(goStatistics);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
     @Override
@@ -53,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.statspage) {
             goStatistics = new Intent(this, Statistics.class);
             startActivity(goStatistics);
+            overridePendingTransition(R.anim.activityin,R.anim.activityout);
             return true;
         }
         else if (item.getItemId() == R.id.rulespage) {
             goRules = new Intent(this, Rules.class);
             startActivity(goRules);
+            overridePendingTransition(R.anim.activityin,R.anim.activityout);
             return true;
         }
         else if (item.getItemId()== R.id.homepage) {
