@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#ACDDF8"
     android:gravity="center"
-    android:layout_marginRight="10dp"
     android:orientation="vertical"
     tools:context=".Game">
 
@@ -22,6 +21,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
         android:layout_height="wrap_content">
 
         <ImageView
