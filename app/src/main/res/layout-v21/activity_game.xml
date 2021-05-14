@@ -21,9 +21,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="3dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="3dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -32,15 +32,12 @@
             tools:ignore="MissingConstraints" />
 
 
-
-
         <GridLayout
             android:id="@+id/grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:columnCount="3"
             android:orientation="horizontal"
@@ -76,7 +73,7 @@
 
                 <Button
                     android:id="@+id/g15"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g16"
@@ -125,23 +122,23 @@
 
                 <Button
                     android:id="@+id/g25"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g26"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g27"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g28"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g29"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
             </GridLayout>
 
 
@@ -173,7 +170,7 @@
 
                 <Button
                     android:id="@+id/g35"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g36"
@@ -181,7 +178,7 @@
 
                 <Button
                     android:id="@+id/g37"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g38"
@@ -189,7 +186,7 @@
 
                 <Button
                     android:id="@+id/g39"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
             </GridLayout>
 
@@ -225,7 +222,7 @@
 
                 <Button
                     android:id="@+id/g46"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g47"
@@ -253,7 +250,7 @@
 
                 <Button
                     android:id="@+id/g51"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g52"
@@ -281,7 +278,7 @@
 
                 <Button
                     android:id="@+id/g58"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g59"
@@ -313,7 +310,7 @@
 
                 <Button
                     android:id="@+id/g64"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g65"
@@ -325,7 +322,7 @@
 
                 <Button
                     android:id="@+id/g67"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g68"
@@ -333,7 +330,8 @@
 
                 <Button
                     android:id="@+id/g69"
-                    style="@style/ButtonStyle" />
+                    style="@style/ButtonStyle"
+                    android:layout_width="37dp" />
 
             </GridLayout>
 
@@ -374,11 +372,11 @@
 
                 <Button
                     android:id="@+id/g77"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g78"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g79"
@@ -401,15 +399,15 @@
 
                 <Button
                     android:id="@+id/g82"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g83"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g84"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g85"
@@ -417,19 +415,19 @@
 
                 <Button
                     android:id="@+id/g86"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g87"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g88"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g89"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
             </GridLayout>
 
@@ -457,11 +455,11 @@
 
                 <Button
                     android:id="@+id/g94"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g95"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
 
                 <Button
                     android:id="@+id/g96"
@@ -477,13 +475,12 @@
 
                 <Button
                     android:id="@+id/g99"
-                    style="@style/ButtonStyle"/>
+                    style="@style/ButtonStyle" />
             </GridLayout>
 
 
         </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <LinearLayout

@@ -9,13 +9,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-    Intent goRules, goGame, goStatistics;
-    Button start, rules, stats1;
+    Intent goRules, goGame, goStatistics,goMaps;
+    Button start, rules, stats1,maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.start);
         rules = findViewById(R.id.rules);
         stats1 = findViewById(R.id.stats1);
+        maps= findViewById(R.id.maps);
     }
 
     public void goRules(View view) {
@@ -41,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     public void goStats(View view) {
         goStatistics = new Intent(this, Statistics.class);
         startActivity(goStatistics);
+        overridePendingTransition(R.anim.activityin,R.anim.activityout);
+    }
+    public void goMaps(View view) {
+        goMaps = new Intent(this,Maps.class);
+        startActivity(goMaps);
         overridePendingTransition(R.anim.activityin,R.anim.activityout);
     }
 
@@ -71,4 +78,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
+
+
 }

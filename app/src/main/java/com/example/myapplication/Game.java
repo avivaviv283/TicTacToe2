@@ -1,12 +1,20 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,7 +31,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
-public class Game extends AppCompatActivity implements View.OnClickListener {
+public class Game extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     Button[] btnsg1, btnsg2, btnsg3, btnsg4, btnsg5, btnsg6, btnsg7, btnsg8, btnsg9;
     Button btnResetGame;
@@ -39,6 +47,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     int counter = 0;
     int btnCount = 0;
     GridLayout grid;
+    String provider;
+    LocationManager locman;
+    Location local;
+    String lonString, latString;
 
 
     @Override
@@ -164,6 +176,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
         setArr();
         Arrays.fill(boardState, noWin);
+        locman = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        provider = locman.getBestProvider(criteria, true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locman.requestLocationUpdates(provider, 2000, 1, this);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_NETWORK_STATE},2);
     }
 
     //  Sets all Listeners for Buttons
@@ -208,8 +237,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
                     if (!isWinBigSquare(i).equals("")) {// Checks if the game ended and there is a winner
                         indicateBigWin(i);
                         sendStats(i);
+                        sendMapStats();
                         createDialog();
-
 
 
                     }
@@ -221,7 +250,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
 
                     }
-
 
 
                 }
@@ -316,7 +344,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     public void goMenu(View view) {
         goMenu = new Intent(this, MainActivity.class);
         startActivity(goMenu);
-        overridePendingTransition(R.anim.activityin,R.anim.activityout);
+        overridePendingTransition(R.anim.activityin, R.anim.activityout);
     }
 
     public boolean findColumn(int i, int j) { // Find if any player won a primary square by completing column
@@ -606,6 +634,50 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+
+    public void sendMapStats() { // sends map stats to file
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput("location1.txt", Context.MODE_APPEND);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(latString+"\n");
+            bw.write(lonString+"\n");
+            bw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+    double lat=location.getLatitude();
+    double lon=location.getLongitude();
+    latString= lat+"";
+    lonString= lon+"";
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
 
     }
 }
