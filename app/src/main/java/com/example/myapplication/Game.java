@@ -193,6 +193,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_NETWORK_STATE},2);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.INTERNET},2);
     }
 
     //  Sets all Listeners for Buttons

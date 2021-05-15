@@ -37,11 +37,9 @@ public class Maps extends AppCompatActivity {
     InputStreamReader isr;
     BufferedReader br;
     String st;
-    int lon, lat;
-    int stringCount = 0;
     String geoUriString;
     Button maps, reset;
-    int[] locations;
+    ArrayList<String> locations = new ArrayList<String>();
     Uri geoUri;
 
     @Override
@@ -55,33 +53,29 @@ public class Maps extends AppCompatActivity {
     }
 
     public void readStats() {
-
         try {
             fis = openFileInput("location1.txt");
             isr = new InputStreamReader(fis);
             br = new BufferedReader(isr);
             while ((st = br.readLine()) != null) {
-                if (stringCount % 2 == 0)
-                    lat = Integer.parseInt(st);
-                else
-                    lon = Integer.parseInt(st);
-                stringCount++;
+                locations.add(st);
             }
-
             fis.close();
-        } catch (FileNotFoundException e) {
+        } catch (
+                FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             e.printStackTrace();
         }
 
     }
 
     public void showMaps(View view) {
-        locations = new int[stringCount];
-        for (int i = 0; i < locations.length; i++) {
-            geoUriString = "geo:" + locations[i] + "," + locations[i + 1] + "?z=13";
+        for (int i = 0; i < locations.size(); i += 2) {
+            geoUriString = "geo:" + locations.get(i) + "," + locations.get(i + 1) + "?z=13";
             geoUri = Uri.parse(geoUriString);
+
         }
         Intent map = new Intent(Intent.ACTION_VIEW, geoUri);
         startActivity(map);
@@ -100,9 +94,7 @@ public class Maps extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < locations.length; i++) {
-            locations[i] = Integer.parseInt(null);
-        }
-
+        locations.clear();
     }
+
 }
