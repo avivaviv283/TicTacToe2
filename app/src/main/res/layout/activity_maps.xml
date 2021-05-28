@@ -9,20 +9,30 @@
     android:orientation="vertical"
     tools:context=".Maps">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="Maps:"/>
+
     <Button
         android:id="@+id/maps"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:backgroundTint="@color/teal_200"
+        android:drawableLeft="@drawable/ic_action_name"
         android:onClick="showMaps"
         android:text="Maps"/>
 
     <Button
         android:id="@+id/reset"
         android:onClick="resetLocations"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/reset"
         android:backgroundTint="@color/teal_200"
         android:layout_margin="20dp"
         android:text="Reset Locations"/>

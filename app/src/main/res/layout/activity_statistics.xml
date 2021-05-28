@@ -31,8 +31,9 @@
         android:id="@+id/reset"
         android:onClick="resetStats"
         android:layout_width="match_parent"
+        android:drawableLeft="@drawable/reset"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00AA99"
+        android:backgroundTint="@color/teal_200"
         android:layout_margin="20dp"
         android:text="Reset Statistics"/>
 
@@ -40,9 +41,10 @@
     <Button
         android:id="@+id/menu"
         android:layout_width="match_parent"
+        android:drawableLeft="@drawable/home"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:backgroundTint="#00AA99"
+        android:backgroundTint="@color/teal_200"
         android:onClick="goMenu"
         android:text="To the Menu" />
 

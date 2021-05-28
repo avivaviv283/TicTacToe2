@@ -9,6 +9,9 @@
         android:id="@+id/rulespage"
         android:title="Rules" />
     <item
+        android:id="@+id/maps"
+        android:title="Maps" />
+    <item
         android:id="@+id/allRules"
         android:title="Rules:"
         android:visible="false">

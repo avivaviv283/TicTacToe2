@@ -75,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
         else if (item.getItemId()== R.id.homepage) {
             Toast.makeText(this, "You are already in the selected page!", Toast.LENGTH_LONG).show();
         }
+        else if (item.getItemId() == R.id.maps) {
+            goMaps = new Intent(this, Maps.class);
+            startActivity(goMaps);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
+        }
         return true;
 
     }

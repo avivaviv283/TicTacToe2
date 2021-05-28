@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:onClick="goGame"
+        android:drawableLeft="@drawable/play"
         android:backgroundTint="@color/teal_200"
         android:text="Play" />
     <Button
@@ -32,6 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:onClick="goStats"
+        android:textSize="12dp"
+        android:drawableLeft="@drawable/stats"
         android:backgroundTint="@color/teal_200"
         android:text="Statistics" />
 
@@ -41,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:onClick="goRules"
+        android:drawableLeft="@drawable/rules"
         android:backgroundTint="@color/teal_200"
         android:text="rules" />
 
@@ -48,6 +52,7 @@
         android:id="@+id/maps"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_name"
         android:layout_margin="20dp"
         android:backgroundTint="@color/teal_200"
         android:onClick="goMaps"

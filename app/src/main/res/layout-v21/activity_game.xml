@@ -10,13 +10,13 @@
     tools:context=".Game">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:fontFamily="casual"
         android:gravity="center"
         android:text="Welcome to X O "
         android:textColor="@color/black"
-        android:textSize="30sp" />
+        android:textSize="30dp" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -520,7 +520,8 @@
             android:layout_height="50dp"
             android:layout_margin="2dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#00AA99"
+            android:backgroundTint="@color/teal_200"
+            android:drawableLeft="@drawable/reset"
             android:text="play again"
             android:textColor="#fff" />
 
@@ -528,7 +529,8 @@
             android:id="@+id/menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00AA99"
+            android:backgroundTint="@color/teal_200"
+            android:drawableLeft="@drawable/home"
             android:onClick="goMenu"
             android:text="To the Menu" />
 

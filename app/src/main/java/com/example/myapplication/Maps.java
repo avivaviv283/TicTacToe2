@@ -15,9 +15,13 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.sax.StartElementListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,6 +45,7 @@ public class Maps extends AppCompatActivity {
     Button maps, reset;
     ArrayList<String> locations = new ArrayList<String>();
     Uri geoUri;
+    Intent goRules, goMenu, goStatistics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,4 +102,38 @@ public class Maps extends AppCompatActivity {
         locations.clear();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mymenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.statspage) {
+            Toast.makeText(this, "You are already in the selected page!", Toast.LENGTH_LONG).show();
+        } else if (item.getItemId() == R.id.rulespage) {
+            goRules = new Intent(this, Rules.class);
+            startActivity(goRules);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
+            return true;
+        } else if (item.getItemId() == R.id.homepage) {
+            goMenu = new Intent(this, MainActivity.class);
+            startActivity(goMenu);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
+        }
+        if (item.getItemId() == R.id.maps) {
+            Toast.makeText(this, "You are already in the selected page!", Toast.LENGTH_LONG).show();
+        }
+        else if (item.getItemId() == R.id.statspage) {
+            goStatistics = new Intent(this, Statistics.class);
+            startActivity(goStatistics);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
+        }
+        return true;
+
+    }
+
 }
+

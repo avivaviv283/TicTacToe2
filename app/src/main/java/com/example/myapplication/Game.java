@@ -192,7 +192,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
         locman.requestLocationUpdates(provider, 2000, 1, this);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_NETWORK_STATE},2);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.INTERNET},2);
     }
 
@@ -645,7 +644,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
         FileOutputStream fos = null;
 
         try {
-            fos = openFileOutput("location1.txt", Context.MODE_APPEND);
+            fos = openFileOutput("location1.txt", Context.MODE_PRIVATE);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             BufferedWriter bw = new BufferedWriter(osw);
             bw.write(latString+"\n");

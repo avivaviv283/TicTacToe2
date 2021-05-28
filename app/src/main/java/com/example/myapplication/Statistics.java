@@ -34,7 +34,7 @@ import static java.lang.Integer.parseInt;
 
 public class Statistics extends AppCompatActivity {
     Button toMenu, reset;
-    Intent goMenu, goRules;
+    Intent goMenu, goRules,goMaps;
     StatsRead stats = new StatsRead();
     FileInputStream fis;
     InputStreamReader isr;
@@ -148,6 +148,11 @@ public class Statistics extends AppCompatActivity {
             goMenu = new Intent(this, MainActivity.class);
             startActivity(goMenu);
             overridePendingTransition(R.anim.activityin,R.anim.activityout);
+        }
+        else if (item.getItemId() == R.id.maps) {
+            goMaps = new Intent(this, Maps.class);
+            startActivity(goMaps);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
         }
         return true;
 

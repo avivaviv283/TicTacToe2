@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class Rules extends AppCompatActivity {
     Button rules2;
-    Intent goRules2,goRules3,goRules4,goRules5, goMenu, goStats;
+    Intent goRules2,goRules3,goRules4,goRules5, goMenu, goStats,goMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,11 @@ public class Rules extends AppCompatActivity {
             goMenu = new Intent(this, MainActivity.class);
             startActivity(goMenu);
             overridePendingTransition(R.anim.activityin,R.anim.activityout);
+
+        }  else if (item.getItemId() == R.id.maps) {
+            goMaps = new Intent(this, Maps.class);
+            startActivity(goMaps);
+            overridePendingTransition(R.anim.activityin, R.anim.activityout);
 
         } else if (item.getItemId() == R.id.r2) {
             goRules2 = new Intent(this, Rules2.class);
