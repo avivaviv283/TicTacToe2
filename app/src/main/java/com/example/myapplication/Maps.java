@@ -46,6 +46,7 @@ public class Maps extends AppCompatActivity {
     ArrayList<String> locations = new ArrayList<String>();
     Uri geoUri;
     Intent goRules, goMenu, goStatistics;
+    String[] permissions = {Manifest.permission.INTERNET,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class Maps extends AppCompatActivity {
         maps = findViewById(R.id.maps);
         reset = findViewById(R.id.reset);
         readStats();
-
+        ActivityCompat.requestPermissions(this,permissions,1);
     }
 
     public void readStats() {
@@ -77,14 +78,15 @@ public class Maps extends AppCompatActivity {
     }
 
     public void showMaps(View view) {
-        for (int i = 0; i < locations.size(); i += 2) {
-            geoUriString = "geo:" + locations.get(i) + "," + locations.get(i + 1) + "?z=13";
+        if (locations.isEmpty() || locations.get(0) == null || locations.get(1) == null) {
+            Toast.makeText(this, "Location Not Available, Please Finish a Game to Submit Current Location.", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            geoUriString = "geo:" + locations.get(0) + "," + locations.get(1) + "?z=13";
             geoUri = Uri.parse(geoUriString);
-
+            Intent map = new Intent(Intent.ACTION_VIEW, geoUri);
+            startActivity(map);
         }
-        Intent map = new Intent(Intent.ACTION_VIEW, geoUri);
-        startActivity(map);
-
     }
 
     public void resetLocations(View view) {
@@ -100,6 +102,7 @@ public class Maps extends AppCompatActivity {
             e.printStackTrace();
         }
         locations.clear();
+        Toast.makeText(this, "Location Cleared", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -125,8 +128,7 @@ public class Maps extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.maps) {
             Toast.makeText(this, "You are already in the selected page!", Toast.LENGTH_LONG).show();
-        }
-        else if (item.getItemId() == R.id.statspage) {
+        } else if (item.getItemId() == R.id.statspage) {
             goStatistics = new Intent(this, Statistics.class);
             startActivity(goStatistics);
             overridePendingTransition(R.anim.activityin, R.anim.activityout);
@@ -135,5 +137,10 @@ public class Maps extends AppCompatActivity {
 
     }
 
+    public void goMenu(View view) {
+        goMenu = new Intent(this, MainActivity.class);
+        startActivity(goMenu);
+        overridePendingTransition(R.anim.activityin, R.anim.activityout);
+    }
 }
 

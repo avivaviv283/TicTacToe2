@@ -51,7 +51,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
     LocationManager locman;
     Location local;
     String lonString, latString;
-
+    String[] permissions = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
         btnsg1[6] = findViewById(R.id.g17);
         btnsg1[7] = findViewById(R.id.g18);
         btnsg1[8] = findViewById(R.id.g19);
-
 
         btnsg2[0] = findViewById(R.id.g21);
         btnsg2[1] = findViewById(R.id.g22);
@@ -189,10 +188,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locman.requestLocationUpdates(provider, 2000, 1, this);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.INTERNET},2);
+        locman.requestLocationUpdates(provider, 0, 0,this);
+        ActivityCompat.requestPermissions(this,permissions,1);
+
     }
 
     //  Sets all Listeners for Buttons
@@ -214,7 +212,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
             this.reset();
         } else {
             int i = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(1, 2)) - 1; // Gets location of primary square
-            int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1; // Gets loaction of secondary square
+            int j = Integer.parseInt(getResources().getResourceEntryName(v.getId()).substring(2)) - 1; // Gets location of secondary square
 
             if (!arr[i][j].getText().equals("")) { // Unable to click on filled square
                 Toast.makeText(this, "Square already filled!", Toast.LENGTH_SHORT).show();
@@ -329,6 +327,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
     public void reset() { // Resets entire board
         tvWin.setVisibility(View.INVISIBLE);
         indicateTurn.setVisibility(View.INVISIBLE);
+        btnResetGame.setVisibility(View.INVISIBLE);
         for (int i = 0; i < arr.length; i++) {
             boardState[i] = noWin;
             for (int j = 0; j < arr.length; j++) {
@@ -640,7 +639,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
 
 
     public void sendMapStats() { // sends map stats to file
-
         FileOutputStream fos = null;
 
         try {
