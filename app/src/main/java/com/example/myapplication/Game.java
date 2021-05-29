@@ -235,8 +235,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                     if (!isWinBigSquare(i).equals("")) {// Checks if the game ended and there is a winner
                         indicateBigWin(i);
                         sendStats(i);
-                        sendMapStats();
                         createDialog();
+                        if (latString!=null|| lonString!=null) {
+                            sendMapStats();
+                        }
 
 
                     }
@@ -245,6 +247,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                         indicateNoWin(i);
                         sendStats(i);
                         createDialog();
+                        if (latString!=null|| lonString!=null) {
+                            sendMapStats();
+                        }
 
 
                     }
