@@ -37,11 +37,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
     Button btnResetGame;
     Button[][] arr = new Button[9][9];
     int[] boardState = new int[9];
-    StatsRead stats = new StatsRead();
     int goTo = 0;
     final int noWin = 0;
     final int X = 1;
     final int O = 2;
+    final int Tie = 3;
     TextView tvWin, indicateTurn;
     Intent goMenu;
     int counter = 0;
@@ -188,8 +188,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locman.requestLocationUpdates(provider, 0, 0,this);
-        ActivityCompat.requestPermissions(this,permissions,1);
+        locman.requestLocationUpdates(provider, 0, 0, this);
+        ActivityCompat.requestPermissions(this, permissions, 1);
 
     }
 
@@ -223,6 +223,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                 if (boardState[goTo] != noWin) {
                     enable();
                 }
+                if (allFilled(i) && boardState[i] == noWin) {
+                    boardState[i] = Tie;
+                }
                 if (isSameSquare(i, j) && !winSquare(i, j).equals("")) {// checks if secondary square clicked goes to the same primary square
                     enable();
                 }
@@ -236,18 +239,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                         indicateBigWin(i);
                         sendStats(i);
                         createDialog();
-                        if (latString!=null|| lonString!=null) {
+                        if (latString != null || lonString != null) {
                             sendMapStats();
                         }
 
 
                     }
 
-                    if (allFilled(i) && isWinBigSquare(i).equals("")) { // Checks if the game ended and there is not a winner
+                    if (allFilledTie(i) && isWinBigSquare(i).equals("")) { // Checks if the game ended and there is not a winner
                         indicateNoWin(i);
                         sendStats(i);
                         createDialog();
-                        if (latString!=null|| lonString!=null) {
+                        if (latString != null || lonString != null) {
                             sendMapStats();
                         }
 
@@ -315,6 +318,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                     temp[i][j].getBackground().setAlpha(255);
                 }
             } else {
+                for (int l = 0; l < temp.length; l++) {
+                    temp[i][l].setEnabled(false);
+                    temp[i][l].getBackground().setAlpha(100);
+                }
+            }
+            if (boardState[i] == Tie) {
                 for (int l = 0; l < temp.length; l++) {
                     temp[i][l].setEnabled(false);
                     temp[i][l].getBackground().setAlpha(100);
@@ -588,7 +597,9 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
     public void indicateBigWin(int i) { // indicating win if any player won the game
 
         tvWin.setText(isWinBigSquare(i) + "Wins!");
+        indicateTurn.setVisibility(View.INVISIBLE);
         tvWin.setVisibility(View.VISIBLE);
+
         indicateTurn.setVisibility(View.GONE);
         for (int k = 0; k < arr.length; k++) {
             for (int l = 0; l < arr.length; l++) {
@@ -598,7 +609,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
         }
     }
 
-    public boolean allFilled(int i) { // checks if all the primary squares are filled
+    public boolean allFilledTie(int i) { // checks if all the primary squares are filled
         int count = 0;
         for (int k = 0; k < boardState.length; k++) {
             if (boardState[k] != noWin) {
@@ -606,6 +617,18 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
             }
         }
         return count == 9;
+    }
+
+    public boolean allFilled(int i) { // check if 9x9 small square is all filled
+        int count = 0;
+        for (int k = 0; k < btnsg1.length; k++) {
+            if (arr[i][k].getText() != "") {
+                count++;
+            }
+        }
+        return count == 9;
+
+
     }
 
     public void indicateNoWin(int i) { // indicating a tie
@@ -629,7 +652,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
                 bw.write("X" + "\n");
             if (isWinBigSquare(i).equals("O"))
                 bw.write("O" + "\n");
-            if (allFilled(i)) {
+            if (allFilledTie(i)) {
                 bw.write("T" + "\n");
             }
             bw.close();
@@ -642,7 +665,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
     }
 
 
-
     public void sendMapStats() { // sends map stats to file
         FileOutputStream fos = null;
 
@@ -650,8 +672,8 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
             fos = openFileOutput("location1.txt", Context.MODE_PRIVATE);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             BufferedWriter bw = new BufferedWriter(osw);
-            bw.write(latString+"\n");
-            bw.write(lonString+"\n");
+            bw.write(latString + "\n");
+            bw.write(lonString + "\n");
             bw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -663,10 +685,10 @@ public class Game extends AppCompatActivity implements View.OnClickListener, Loc
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-    double lat=location.getLatitude();
-    double lon=location.getLongitude();
-    latString= lat+"";
-    lonString= lon+"";
+        double lat = location.getLatitude();
+        double lon = location.getLongitude();
+        latString = lat + "";
+        lonString = lon + "";
     }
 
     @Override
